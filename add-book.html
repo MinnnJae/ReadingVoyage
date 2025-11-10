@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Book - ReadVoyage</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8f9fa;
+      color: #2C3E50;
+      line-height: 1.6;
+    }
+    .container {padding: 20px; max-width: 600px; margin: auto;}
+    h2 {color: #2C3E50; margin-bottom: 20px; border-bottom: 2px solid #E67E22; padding-bottom: 10px;}
+    .form-group {margin-bottom: 20px;}
+    label {display: block; margin-bottom: 8px; font-weight: 600;}
+    input, textarea, select {
+      width: 100%; padding: 12px; border: 2px solid #e0e0e0;
+      border-radius: 8px; font-size: 14px; background: white;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none; border-color: #E67E22;
+    }
+    textarea {resize: vertical; min-height: 80px;}
+    .button-group {display: flex; gap: 12px; margin-top: 30px;}
+    button {
+      flex: 1; padding: 14px; border: none; border-radius: 8px;
+      cursor: pointer; font-size: 14px; font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .btn-primary {background: #E67E22; color: white;}
+    .btn-primary:hover {background: #D35400;}
+    .btn-secondary {background: #95a5a6; color: white;}
+    .btn-secondary:hover {background: #7f8c8d;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Add New Book to Library</h2>
+
+    <div class="form-group">
+      <label for="title" class="required">Book Title:</label>
+      <input type="text" id="title" placeholder="Enter book title" required>
+    </div>
+
+    <div class="form-group">
+      <label for="author" class="required">Author:</label>
+      <input type="text" id="author" placeholder="Enter author name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="isbn">ISBN:</label>
+      <input type="text" id="isbn" placeholder="Enter ISBN (optional)">
+    </div>
+
+    <div class="form-group">
+      <label for="pages">Total Pages:</label>
+      <input type="number" id="pages" placeholder="Enter total pages (optional)" min="1">
+    </div>
+
+    <div class="form-group">
+      <label for="category">Category:</label>
+      <select id="category">
+        <option value="fiction">Fiction</option>
+        <option value="non-fiction">Non-Fiction</option>
+        <option value="fantasy">Fantasy</option>
+        <option value="science-fiction">Science Fiction</option>
+        <option value="biography">Biography</option>
+        <option value="self-help">Self Help</option>
+        <option value="romance">Romance</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Reading Status:</label>
+      <select id="status">
+        <option value="unread">Unread</option>
+        <option value="reading">Reading</option>
+        <option value="completed">Completed</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Notes:</label>
+      <textarea id="description" placeholder="Enter your notes or summary..."></textarea>
+    </div>
+
+    <div class="button-group">
+      <button class="btn-primary" id="saveBtn">Add Book</button>
+      <button class="btn-secondary" onclick="window.close()">Cancel</button>
+    </div>
+  </div>
+
+<script>
+  const { ipcRenderer } = require('electron');
+
+  function addNewBook() {
+    const title = document.getElementById('title').value.trim();
+    const author = document.getElementById('author').value.trim();
+    if (!title || !author) {
+      alert('Please fill in Title and Author');
+      return;
+    }
+
+    const bookData = {
+      id: Date.now().toString(),
+      title,
+      author,
+      isbn: document.getElementById('isbn').value.trim(),
+      pages: document.getElementById('pages').value || '',
+      category: document.getElementById('category').value,
+      status: document.getElementById('status').value,
+      description: document.getElementById('description').value.trim(),
+      addedDate: new Date().toISOString(),
+      lastUpdated: new Date().toISOString(),
+    };
+
+    ipcRenderer.send('item:add', bookData);
+    alert('✅ Book added!');
+    window.close();
+  }
+
+  function closeWindow() {
+    window.close();
+  }
+</script>
+
+
+</body>
+</html>

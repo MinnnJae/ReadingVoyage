@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReadVoyage - Your Reading Journey</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="sidebar">
+            <div class="logo-section">
+                <div class="logo">
+                    <span class="logo-icon">📚</span>
+                    <h1>ReadVoyage</h1>
+                </div>
+                <p class="app-tagline">Map Your Reading Journey</p>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="#" class="nav-link" data-page="dashboard">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="search">
+                        <span class="nav-icon">🔍</span>
+                        <span class="nav-text">Search Books</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="library">
+                        <span class="nav-icon">📖</span>
+                        <span class="nav-text">My Library</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="challenge">
+                        <span class="nav-icon">🔥</span>
+                        <span class="nav-text">Reading Challenge</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="user-stats">
+                <div class="stat-card">
+                    <span class="stat-number" id="sidebar-total-books">0</span>
+                    <span class="stat-label">Total Books</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="sidebar-books-read">0</span>
+                    <span class="stat-label">Books Read</span>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="content-header">
+                <h2 id="page-title">Dashboard</h2>
+                <div class="header-actions">
+                    <div class="theme-toggle">
+                        <label class="switch">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="slider"></span>
+                        </label>
+                        <span>Dark Mode</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content" id="page-content">
+                <div class="dashboard-content active" id="dashboard-content">
+                    <div class="welcome-section">
+                        <h3>Welcome to ReadVoyage! 🌟</h3>
+                        <p>Start your reading journey by adding books to your library.</p>
+                    </div>
+
+                    <div id="reading-summary" class="dashboard-summary">
+                        <h3>📖 Your Reading Progress</h3>
+                        <p>Here's how your reading journey looks so far:</p>
+
+                        <div class="dashboard-stats">
+                            <div class="stat-box">
+                                <h2 id="total-books">0</h2>
+                                <p>Total Books</p>
+                            </div>
+                            <div class="stat-box">
+                                <h2 id="books-reading">0</h2>
+                                <p>Currently Reading</p>
+                            </div>
+                            <div class="stat-box">
+                                <h2 id="books-completed">0</h2>
+                                <p>Completed Books</p>
+                            </div>
+                            <div class="stat-box">
+                                <h2 id="dashboard-challenge-progress">0%</h2>
+                                <p>Challenge Progress</p>
+                            </div>
+                        </div>
+
+                        <div class="motivation">
+                            <p>✨ Keep going! Every page you read brings you closer to your next adventure.</p>
+                        </div>
+
+                        <div class="challenge-cta">
+                            <button class="btn btn-primary" id="edit-challenge-from-dashboard">
+                                🎯 Edit Reading Challenge
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="search-content" id="search-content" style="display: none;">
+                    <div class="search-section">
+                        <h3>Search Books & Authors</h3>
+                        <div class="search-controls">
+                            <input type="text" id="search-input" placeholder="Enter book title or author name..." class="search-input">
+                            <select id="search-type" class="search-select">
+                                <option value="books">Search Books</option>
+                                <option value="authors">Search Authors</option>
+                            </select>
+                            <button class="btn btn-primary" id="search-button">Search</button>
+                        </div>
+                        <div class="search-results" id="search-results">
+                            <div class="empty-state">
+                                <span class="empty-icon">🔍</span>
+                                <h4>Search for Books</h4>
+                                <p>Enter a book title or author name to start searching</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="library-content" id="library-content" style="display: none;">
+                    <div class="library-header">
+                        <h3>My Library</h3>
+                        <div class="library-actions">
+                            <button class="btn btn-outline" id="clear-library">Clear Library</button>
+                            <button class="btn btn-outline" id="export-library">Export Library</button>
+                        </div>
+                    </div>
+                    <div class="books-container">
+                        <div class="books-list" id="books-list">
+                            <div class="empty-state">
+                                <span class="empty-icon">📚</span>
+                                <h4>Your library is empty</h4>
+                                <p>Add some books to get started with your reading journey!</p>
+                                <button class="btn btn-primary" id="add-first-book">Add Your First Book</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="challenge-content" id="challenge-content" style="display: none;">
+                        <div class="challenge-header">
+                        <h1>2025 Reading Challenge</h1>
+                        <button class="btn btn-outline" id="back-to-dashboard">← Back to Dashboard</button>
+                    </div>
+                    <div class="challenge-progress">
+                        <div class="progress-circle">
+                        <div class="progress-text">
+                        <span id="progress-percent">0%</span>
+                    </div>
+                </div>
+                    <div class="challenge-stats">
+                        <div class="stat">
+                        <div class="number" id="challenge-books-read">0</div>
+                        <div class="label">Books Read</div>
+                    </div>
+            <div class="stat">
+                <div class="number" id="challenge-target">12</div>
+                <div class="label">Target</div>
+            </div>
+            <div class="stat">
+                <div class="number" id="challenge-remaining">12</div>
+                <div class="label">To Go</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="progress-bar-container">
+        <div class="progress-bar">
+            <div class="progress-fill" id="challenge-progress-bar"></div>
+        </div>
+        <div class="progress-labels">
+            <span>0</span>
+            <span id="target-display">12</span>
+        </div>
+    </div>
+
+    <div class="edit-section">
+        <h3>Edit Your Challenge</h3>
+        <div class="form-group">
+            <label for="books-read-input">Books Read This Year</label>
+            <input type="number" id="books-read-input" class="form-control" min="0" value="0">
+        </div>
+        
+        <div class="form-group">
+            <label for="target-input">Reading Goal (Target Books)</label>
+            <input type="number" id="target-input" class="form-control" min="1" value="12">
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-primary" id="update-challenge">
+                💾 Update Challenge
+            </button>
+            <button class="btn btn-secondary" id="cancel-edit">
+                ❌ Cancel
+            </button>
+        </div>
+    </div>
+    
+    <div class="motivation-message">
+        <p id="motivation-text">🎯 <strong>Keep going!</strong> You're on your way to reaching your reading goal!</p>
+    </div>
+</div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/utils/constants.js"></script>
+    <script src="../js/utils/helpers.js"></script>
+    <script src="../js/api/openlibrary.js"></script>
+    <script src="../js/api/storage.js"></script>
+    <script src="../js/renderer.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
